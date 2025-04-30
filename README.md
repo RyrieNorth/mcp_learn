@@ -1,8 +1,7 @@
 ﻿# vmware_ai_agent
 
 ## 一个简单的 VMware ai agent demo
-![95aebd245d798e68fa1da8e0e2d0fc2](https://github.com/user-attachments/assets/7112ca88-470b-438e-a4e1-254107fb17b3)
-
+![95aebd245d798e68fa1da8e0e2d0fc2](https://github.com/user-attachments/assets/3abc7d32-23bf-4c5c-9358-de5d8491ff77)
 
 ## 使用方法：
 
