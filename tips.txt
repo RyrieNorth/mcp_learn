@@ -1,0 +1,7 @@
+# 启用VMware rest API程序
+%VMWarePath%/vmrest.exe -C
+username: xxx
+password: xxx
+
+# 测试启动
+vmrest.exe
