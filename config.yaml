@@ -1,9 +1,0 @@
-vmware:
-  api_base: "http://localhost:8697/api"
-  api_key: ""
-
-llm:
-  api_base: ""
-  api_key: ""
-  module: "Qwen3-30B-A3B"
-  lang: "zh"
