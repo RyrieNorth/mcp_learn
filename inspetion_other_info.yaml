@@ -1,0 +1,33 @@
+- name: 巡检H3C以太网交换机 - 其他常用命令
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    # - name: 查看日志缓冲区信息（设备运行状态与故障排查）
+    #   community.network.ce_command:
+    #     commands: "display logbuffer"
+    #   register: logbuffer_info
+
+    # - name: 日志缓冲区内容
+    #   debug:
+    #     msg: "{{ logbuffer_info.stdout_lines }}"
+
+    - name: 查看网络时间协议（NTP）状态（确保时间同步）
+      community.network.ce_command:
+        commands: "display ntp status"
+      register: ntp_status
+
+    - name: 网络时间协议状态信息
+      debug:
+        msg: "{{ ntp_status.stdout_lines }}"
+
+    - name: 查看光模块状态和参数信息
+      community.network.ce_command:
+        commands: "display transceiver interface"
+      register: transceiver_info
+
+    - name: 光模块信息
+      debug:
+        msg: "{{ transceiver_info.stdout_lines }}"

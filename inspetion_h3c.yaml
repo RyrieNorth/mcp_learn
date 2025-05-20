@@ -1,0 +1,180 @@
+- name: 巡检H3C以太网交换机 - 硬件状态
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: 巡检设备版本：
+      community.network.ce_command:
+        commands: "display version"
+      register: device_version
+
+    - name: 设备版本信息：
+      debug:
+        msg: "{{ device_version.stdout_lines }}"
+
+    - name: 巡检当前设备时间：
+      community.network.ce_command:
+        commands: "display clock"
+      register: device_clock
+
+    - name: 当前设备时间：
+      debug:
+        msg: "{{ device_clock.stdout_lines }}"
+
+    - name: 巡检设备温度：
+      community.network.ce_command:
+        commands: "display environment"
+      register: device_environment
+
+    - name: 设备温度：
+      debug:
+        msg: "{{ device_environment.stdout_lines }}"
+
+    - name: 巡检设备电源模块和供电情况：
+      community.network.ce_command:
+        commands: "display power"
+      register: device_power
+
+    - name: 设备电源模块和供电情况：
+      debug:
+        msg: "{{ device_power.stdout_lines }}"
+
+    - name: 巡检设备风扇运行情况：
+      community.network.ce_command:
+        commands: "display fan"
+      register: device_fan
+
+    - name: 设备风扇运行情况：
+      debug:
+        msg: "{{ device_fan.stdout_lines }}"
+
+    - name: 巡检设备CPU最近5秒、1一分钟、5分钟使用率：
+      community.network.ce_command:
+        commands: "display cpu-usage"
+      register: device_cpu_usage
+
+    - name: 设备CPU最近5秒、1一分钟、5分钟使用率：
+      debug:
+        msg: "{{ device_cpu_usage.stdout_lines }}"
+
+    - name: 巡检设备内存总大小与当前占用情况：
+      community.network.ce_command:
+        commands: "display memory"
+      register: device_memory
+
+    - name: 设备内存总大小与当前占用情况：
+      debug:
+        msg: "{{ device_memory.stdout_lines }}"
+
+- name: 巡检H3C以太网交换机 - 接口状态：
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: 快速查看接口的基本状态和流量信息：
+      community.network.ce_command:
+        commands: "display interface brief"
+      register: interface_brief
+
+    - name: 接口基本状态信息：
+      debug:
+        msg: "{{ interface_brief.stdout_lines }}"
+
+    - name: 查看某个接口的详细信息：
+      community.network.ce_command:
+        commands: "display interface"
+      register: interface_detail
+
+    - name: 接口详细信息：
+      debug:
+        msg: "{{ interface_detail.stdout_lines }}"
+
+    - name: 查看参与Trunk的端口信息：
+      community.network.ce_command:
+        commands: "display port trunk"
+      register: trunk_ports
+
+    - name: Trunk端口信息：
+      debug:
+        msg: "{{ trunk_ports.stdout_lines }}"
+
+    - name: 查看链路聚合组的情况：
+      community.network.ce_command:
+        commands: "display link-aggregation summary"
+      register: aggregation_summary
+
+    - name: 链路聚合组信息：
+      debug:
+        msg: "{{ aggregation_summary.stdout_lines }}"
+
+- name: 巡检H3C以太网交换机 - 安全设置
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: 查看ARP表（检测ARP欺骗）
+      community.network.ce_command:
+        commands: "display arp"
+      register: arp_table
+
+    - name: ARP表内容
+      debug:
+        msg: "{{ arp_table.stdout_lines }}"
+
+    - name: 查看MAC地址表（二层转发与学习）
+      community.network.ce_command:
+        commands: "display mac-address"
+      register: mac_table
+
+    - name: MAC地址表内容
+      debug:
+        msg: "{{ mac_table.stdout_lines }}"
+
+- name: 巡检H3C以太网交换机 - 其他常用命令
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    # - name: 查看日志缓冲区信息（设备运行状态与故障排查）
+    #   community.network.ce_command:
+    #     commands: "display logbuffer"
+    #   register: logbuffer_info
+
+    # - name: 日志缓冲区内容
+    #   debug:
+    #     msg: "{{ logbuffer_info.stdout_lines }}"
+
+    - name: 查看邻居发现协议（NDP）信息（适用于路由器）
+      community.network.ce_command:
+        commands: "display ndp"
+      register: ndp_info
+
+    - name: 邻居发现协议信息
+      debug:
+        msg: "{{ ndp_info.stdout_lines }}"
+
+    - name: 查看网络时间协议（NTP）状态（确保时间同步）
+      community.network.ce_command:
+        commands: "display ntp status"
+      register: ntp_status
+
+    - name: 网络时间协议状态信息
+      debug:
+        msg: "{{ ntp_status.stdout_lines }}"
+
+    - name: 查看光模块状态和参数信息
+      community.network.ce_command:
+        commands: "display transceiver interface"
+      register: transceiver_info
+
+    - name: 光模块信息
+      debug:
+        msg: "{{ transceiver_info.stdout_lines }}"

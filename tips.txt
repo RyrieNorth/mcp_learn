@@ -1,0 +1,5 @@
+ansible-galaxy collection install ansible.netcommon
+
+ansible -i inventory.yaml h3c -m ansible.netcommon.netconf_get -a "source=running"
+
+uv pip install openai ansible ansible-runner

@@ -1,0 +1,16 @@
+- name: display VRP version
+  hosts: core_switch
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+  - name: run display version on remote devices
+    community.network.ce_command:
+      commands: display version
+    register: vrp_version
+
+  # - name: h3c version
+  #   debug:
+  #     msg: "{{ vrp_version }}"
+      

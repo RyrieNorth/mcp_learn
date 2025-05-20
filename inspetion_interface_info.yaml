@@ -1,0 +1,42 @@
+- name: 巡检H3C以太网交换机 - 接口状态：
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: 快速查看接口的基本状态和流量信息：
+      community.network.ce_command:
+        commands: "display interface brief"
+      register: interface_brief
+
+    - name: 接口基本状态信息：
+      debug:
+        msg: "{{ interface_brief.stdout_lines }}"
+
+    - name: 查看某个接口的详细信息：
+      community.network.ce_command:
+        commands: "display interface"
+      register: interface_detail
+
+    - name: 接口详细信息：
+      debug:
+        msg: "{{ interface_detail.stdout_lines }}"
+
+    - name: 查看参与Trunk的端口信息：
+      community.network.ce_command:
+        commands: "display port trunk"
+      register: trunk_ports
+
+    - name: Trunk端口信息：
+      debug:
+        msg: "{{ trunk_ports.stdout_lines }}"
+
+    - name: 查看链路聚合组的情况：
+      community.network.ce_command:
+        commands: "display link-aggregation summary"
+      register: aggregation_summary
+
+    - name: 链路聚合组信息：
+      debug:
+        msg: "{{ aggregation_summary.stdout_lines }}"
