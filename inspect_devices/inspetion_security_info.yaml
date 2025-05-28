@@ -1,0 +1,24 @@
+- name: 巡检H3C以太网交换机 - 安全设置
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: 查看ARP表（检测ARP欺骗）
+      community.network.ce_command:
+        commands: "display arp"
+      register: arp_table
+
+    - name: ARP表内容
+      debug:
+        msg: "{{ arp_table.stdout_lines }}"
+
+    - name: 查看MAC地址表（二层转发与学习）
+      community.network.ce_command:
+        commands: "display mac-address"
+      register: mac_table
+
+    - name: MAC地址表内容
+      debug:
+        msg: "{{ mac_table.stdout_lines }}"

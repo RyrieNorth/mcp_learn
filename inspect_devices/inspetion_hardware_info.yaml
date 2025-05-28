@@ -1,0 +1,69 @@
+- name: 巡检H3C以太网交换机 - 硬件状态
+  hosts: h3c
+  gather_facts: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: 巡检设备版本：
+      community.network.ce_command:
+        commands: "display version"
+      register: device_version
+
+    - name: 设备版本信息：
+      debug:
+        msg: "{{ device_version.stdout_lines }}"
+
+    - name: 巡检当前设备时间：
+      community.network.ce_command:
+        commands: "display clock"
+      register: device_clock
+
+    - name: 当前设备时间：
+      debug:
+        msg: "{{ device_clock.stdout_lines }}"
+
+    - name: 巡检设备温度：
+      community.network.ce_command:
+        commands: "display environment"
+      register: device_environment
+
+    - name: 设备温度：
+      debug:
+        msg: "{{ device_environment.stdout_lines }}"
+
+    - name: 巡检设备电源模块和供电情况：
+      community.network.ce_command:
+        commands: "display power"
+      register: device_power
+
+    - name: 设备电源模块和供电情况：
+      debug:
+        msg: "{{ device_power.stdout_lines }}"
+
+    - name: 巡检设备风扇运行情况：
+      community.network.ce_command:
+        commands: "display fan"
+      register: device_fan
+
+    - name: 设备风扇运行情况：
+      debug:
+        msg: "{{ device_fan.stdout_lines }}"
+
+    - name: 巡检设备CPU最近5秒、1一分钟、5分钟使用率：
+      community.network.ce_command:
+        commands: "display cpu-usage"
+      register: device_cpu_usage
+
+    - name: 设备CPU最近5秒、1一分钟、5分钟使用率：
+      debug:
+        msg: "{{ device_cpu_usage.stdout_lines }}"
+
+    - name: 巡检设备内存总大小与当前占用情况：
+      community.network.ce_command:
+        commands: "display memory"
+      register: device_memory
+
+    - name: 设备内存总大小与当前占用情况：
+      debug:
+        msg: "{{ device_memory.stdout_lines }}"

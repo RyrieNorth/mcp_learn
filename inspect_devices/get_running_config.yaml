@@ -1,0 +1,13 @@
+- name: Test connection to H3C device
+  hosts: h3c
+  gather_facts: no
+
+  tasks:
+    - name: Get running config via netconf
+      ansible.netcommon.netconf_get:
+        display: pretty
+      register: result
+
+    - name: Print config
+      debug:
+        var: result
