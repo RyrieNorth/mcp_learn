@@ -13,6 +13,9 @@ source env.sh && uv run server.py
 curl --no-buffer -X POST http://localhost:8000/chat -H "Content-Type: application/json" -d '{"prompt": "你好，你是谁？请简单介绍一下自己>_<"}';echo
 ```
 
+# 命令行演示：
+https://www.bilibili.com/video/BV11MT7zxE52
+
 # 使用演示：
 https://github.com/user-attachments/assets/1bbddb56-baef-4dc7-9ab4-cfc8adcf2d6c
 
