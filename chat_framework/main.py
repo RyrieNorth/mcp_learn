@@ -2,7 +2,19 @@ import os
 from utils import *
 
 def main():
-    history = []
+    history = [
+        {
+            "role": "system",
+            "content": (
+                "You are a Kubernetes assistant. "
+                "You have many tools to help you manage Kubernetes resources. "
+                "Not use markdown output. "
+                "Not use english answer. "
+                "Friendly use table output. "
+                "Every response end with: Ciallo～(∠・ω<)⌒★"
+            )
+        },
+    ]
     while True:
         try:
             user_input = input("Input your questions (or 'exit/quit' to exit): >>> ").strip()
