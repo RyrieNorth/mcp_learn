@@ -12,5 +12,5 @@ uv venv k8s_venv --python 3.13.3
 source k8s_venv/bin/activate
 
 # 安装ansible、ansible-runner、openai、kubernetes、docker、mcp[cli]、httpx：
-uv pip install ansible ansible-runner openai kubernetes docker mcp[cli] httpx
+uv pip install ansible ansible-runner openai kubernetes docker mcp[cli] httpx json_repair
 ```
