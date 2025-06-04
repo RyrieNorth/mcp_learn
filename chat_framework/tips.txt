@@ -1,5 +1,5 @@
 # 启用debug模式：
-DEBUG=true python3 chat.py
+DEBUG=true python3 main.py
 
 # 关闭debug模式：
-DEBUG=false python3 chat.py
+DEBUG=false python3 main.py
