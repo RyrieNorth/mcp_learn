@@ -10,6 +10,16 @@ from typing import Dict, Any, Optional
     parameters={"type": "object", "properties": {}, "required": []}
 )
 def get_namespace_list_tool() -> Dict[str, Any]:
+    """
+    Retrieves a list of all namespaces in the current Kubernetes cluster.
+
+    Returns:
+        Dict[str, Any]: A dictionary containing the list of namespaces.
+
+    Example:
+        >>> get_namespace_list_tool()
+        {'namespaces': ['default', 'kube-system', 'dev']}
+    """
     result = list_namespaces(config_path=config_file)
     return result
 
@@ -26,8 +36,22 @@ def get_namespace_list_tool() -> Dict[str, Any]:
     }
 )
 def get_namespace_detail_tool(namespace_name: str) -> Dict[str, Any]:
+    """
+    Retrieves detailed information about a specific Kubernetes namespace.
+
+    Args:
+        namespace_name (str): The name of the namespace to query.
+
+    Returns:
+        Dict[str, Any]: A dictionary containing details of the specified namespace.
+
+    Example:
+        >>> get_namespace_detail_tool("dev")
+        {'name': 'dev', 'labels': {'env': 'development'}, 'status': 'Active'}
+    """
     result = namespace_detail(ns_name=namespace_name, config_path=config_file)
     return result
+
 
 
 @register_tool(
@@ -43,6 +67,20 @@ def get_namespace_detail_tool(namespace_name: str) -> Dict[str, Any]:
     }
 )
 def create_namespace_tool(namespace_name: str, label_name: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Creates a new Kubernetes namespace with an optional label.
+
+    Args:
+        namespace_name (str): The name of the new namespace.
+        label_name (Optional[str]): An optional label in key=value format.
+
+    Returns:
+        Dict[str, Any]: A dictionary indicating the creation result.
+
+    Example:
+        >>> create_namespace_tool("test", "env=testing")
+        {'message': 'Namespace created successfully', 'name': 'test'}
+    """
     result = create_namespace(ns_name=namespace_name, label=label_name, config_path=config_file)
     return result
 
@@ -59,5 +97,18 @@ def create_namespace_tool(namespace_name: str, label_name: Optional[str] = None)
     }
 )
 def delete_namespace_tool(namespace_name: str) -> Dict[str, Any]:
+    """
+    Deletes a specific Kubernetes namespace.
+
+    Args:
+        namespace_name (str): The name of the namespace to delete.
+
+    Returns:
+        Dict[str, Any]: A dictionary indicating the deletion result.
+
+    Example:
+        >>> delete_namespace_tool("dev")
+        {'message': 'Namespace deleted successfully', 'name': 'dev'}
+    """
     result = delete_namespace(ns_name=namespace_name, config_path=config_file)
     return result

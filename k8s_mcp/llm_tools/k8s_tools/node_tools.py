@@ -8,4 +8,21 @@ from llm_tools.k8s_tools.config import config_file
     parameters={"type": "object", "properties": {}, "required": []}
 )
 def get_node_list_tool():
-    return {"nodes": node_list(config_path=config_file)}
+    """
+    Retrieves the list of nodes in the current Kubernetes cluster.
+
+    Returns:
+        Dict[str, Any]: A dictionary containing information about all nodes.
+
+    Example:
+        >>> get_node_list_tool()
+        {
+            "nodes": [
+                {"name": "node-1", "status": "Ready"},
+                {"name": "node-2", "status": "NotReady"}
+            ]
+        }
+    """
+    result = node_list(config_path=config_file)
+    return result
+

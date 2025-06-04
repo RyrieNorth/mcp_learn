@@ -3,12 +3,28 @@ from core.pod_manager import *
 from llm_tools.k8s_tools.config import config_file
 from typing import Dict, Any
 
+
 @register_tool(
     name="get_pod_list",
     description="获取 Kubernetes 集群中所有 Pod",
     parameters={"type": "object", "properties": {}, "required": []}
 )
 def get_pod_list_tool():
+    """
+    Retrieves a list of all Pods in the current Kubernetes cluster.
+
+    Returns:
+        Dict[str, Any]: A dictionary containing the list of all pods.
+
+    Example:
+        >>> get_pod_list_tool()
+        {
+            "pods": [
+                {"name": "nginx-pod", "namespace": "default"},
+                {"name": "redis-pod", "namespace": "dev"}
+            ]
+        }
+    """
     result = pod_list(config_path=config_file)
     return result
 
@@ -25,6 +41,25 @@ def get_pod_list_tool():
     }
 )
 def get_pod_detail_tool(pod_name: str, namespace_name: str = None) -> Dict[str, Any]:
+    """
+    Retrieves detailed information of a specified Pod.
+
+    Args:
+        pod_name (str): The name of the Pod.
+        namespace_name (str, optional): The namespace of the Pod. Defaults to None.
+
+    Returns:
+        Dict[str, Any]: Detailed information about the Pod.
+
+    Example:
+        >>> get_pod_detail_tool("nginx-pod", "default")
+        {
+            "name": "nginx-pod",
+            "status": "Running",
+            "containers": [...],
+            ...
+        }
+    """
     result = pod_detail(pod_name=pod_name, namespace_name=namespace_name, config_path=config_file)
     return result
 
@@ -81,7 +116,31 @@ def create_pod_tool(
     volumes: Optional[List[Dict[str, Any]]] = None,
     labels: Optional[Dict[str, str]] = None,
 ) -> Dict[str, Any]:
-    
+    """
+    Creates a Pod in the specified Kubernetes namespace.
+
+    Args:
+        pod_name (str): Name of the Pod.
+        namespace_name (str): Target namespace for the Pod.
+        containers (List[Dict[str, Any]]): List of containers with images, ports, etc.
+        volumes (Optional[List[Dict[str, Any]]], optional): Volumes to mount in the Pod.
+        labels (Optional[Dict[str, str]], optional): Labels to assign to the Pod.
+
+    Returns:
+        Dict[str, Any]: Result of the Pod creation process.
+
+    Example:
+        >>> create_pod_tool(
+        ...     pod_name="my-pod",
+        ...     namespace_name="default",
+        ...     containers=[{"name": "nginx", "image": "nginx:latest"}],
+        ...     labels={"app": "nginx"}
+        ... )
+        {
+            "status": "Success",
+            "message": "Pod created successfully"
+        }
+    """
     result = create_pod(
         pod_name=pod_name,
         namespace_name=namespace_name,
@@ -106,5 +165,22 @@ def create_pod_tool(
     }
 )
 def delete_service_tool(pod_name: str, namespace_name: str) -> Dict[str, Any]:
+    """
+    Deletes a specified Pod from a Kubernetes namespace.
+
+    Args:
+        pod_name (str): Name of the Pod to delete.
+        namespace_name (str): Namespace where the Pod exists.
+
+    Returns:
+        Dict[str, Any]: Result of the deletion operation.
+
+    Example:
+        >>> delete_service_tool("nginx-pod", "default")
+        {
+            "status": "Success",
+            "message": "Pod deleted successfully"
+        }
+    """
     result = delete_pod(pod_name=pod_name, namespace_name=namespace_name, config_path=config_file)
     return result
