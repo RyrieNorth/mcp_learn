@@ -1,7 +1,7 @@
 [project]
 name = "fetch-time"
 version = "0.1.0"
-description = "Add your description here"
+description = "A simple openai agent from fetch time"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
