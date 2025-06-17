@@ -1,6 +1,7 @@
 import asyncio
 import json
 import httpx
+import time
 from dotenv import load_dotenv
 from utils.logger import logger
 from utils.debug import is_debug_mode
@@ -119,9 +120,14 @@ async def main():
                 )
 
                 logger.info("===== Run Starting =====")
+                start_time = time.time()
+                first_response = True
 
                 async for event in result.stream_events():
                     if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
+                        if first_response:
+                            first_response = False
+                            logger.info(f"⏱️ 首个响应耗时: {time.time() - start_time:.2f} 秒")
                         print(event.data.delta, end="", flush=True)
 
                     elif event.type == "raw_response_event" and isinstance(event.data, ResponseContentPartDoneEvent):
