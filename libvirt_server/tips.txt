@@ -1,0 +1,22 @@
+# 启用debug模式：
+PYTHONPATH=. DEBUG=true python3 main.py
+
+# 关闭debug模式：
+PYTHONPATH=. DEBUG=false python3 main.py
+
+# 运行测试脚本：
+PYTHONPATH=. python tests/1.py
+
+# 安装ansible：
+uv pip install ansible -i https://mirrors.ustc.edu.cn/pypi/simple
+
+# 安装基础环境
+ansible-playbook playbooks/setup_kvm.yaml
+
+# 安装libvirt开发包:
+yum config-manager --set-enabled crb
+yum install epel-release
+yum install libvirt-devel gcc
+
+# 安装openai-agents, fastapi, libvirt-python:
+uv pip install openai-agents fastapi libvirt-python

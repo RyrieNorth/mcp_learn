@@ -1,0 +1,31 @@
+- hosts: kvm
+  tasks:
+    - name: Disabled SELinux
+      selinux:
+        state: disabled
+
+    - name: Remove Firewalld
+      yum:
+        name:
+          - firewalld
+        state: absent
+        
+    - name: Install basic tools
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - vim
+        - bash-completion
+        - net-tools
+        - rsync
+        - conntrack-tools
+        - qemu-kvm
+        - virt-install
+        - libvirt
+    
+    - name: Enable libvirt service
+      service:
+        name: libvirtd
+        state: started
+        enabled: true
