@@ -1,0 +1,29 @@
+请查询名为 default 的 Kubernetes 命名空间的详细信息。
+请查询名为 kube-system 的 Kubernetes 命名空间的详细信息。
+请告诉我当前有哪些命名空间？并查询他们的详细信息。
+
+请告诉我当前有哪些命名空间？
+请告诉我当前有哪些pod？
+请告诉我当前有哪些service？
+请告诉我当前有哪些node？
+
+
+请告诉我当前有哪些namespace、pod？
+请告诉我当前有哪些namespace、pod、service、node？
+请告诉我当前有哪些pod？
+请告诉我当前有哪些namespace？
+
+查看 default 这个namespace
+查看 kubernetes 这个 service
+查看 test 这个 service
+查看 kube-dns 这个 service
+查看 calico-node-sl89d 这个pod
+
+在default namespace 中创建一个名为 my-service1 的service
+
+在default namespace 中创建一个名为 my-service2 的service，类型为clusterip，映射dns端口53 tcp 和udp端口 到容器的53/tcp 与 udp 端口，绑定集群中带有my-app的pod
+
+在default namespace 中创建一个名为 my-service3 的service，类型为nodeport，映射http端口80/tcp到容器的80/tcp端口，nodeport 端口31080/tcp，绑定集群中带有prod的pod
+
+在ryrie namespace 中创建一个名为 nginx-test 的pod，镜像选用：dockerhub.ryrie.cn/library/nginx:latest，映射容器80端口，创建pod时携带app=run的label。创建完毕后创建一个nginx-test的service，映射80端口到容器的80端口，nodeport为31080，绑定pod
+
