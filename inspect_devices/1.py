@@ -32,11 +32,3 @@ for each_host_event in r.events:
             print("纯净stdout：")
             print("\n".join(result['stdout']))
 
-# import ansible_runner
-
-# inventory = """
-# [default] 
-# localhost ansible_host=192.168.85.171 ansible_port=22 ansible_user=root ansible_password=beikong123
-# """
-
-# r = ansible_runner.run(inventory=inventory, host_pattern="default", module='shell', module_args="cat /proc/cpuinfo | grep processor | wc -l")
