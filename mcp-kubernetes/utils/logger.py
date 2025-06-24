@@ -53,7 +53,7 @@ class LogFormatter(logging.Formatter):
         return f"{log_color}{message}{self.RESET}"
 
 # Initialize global logger
-logger = logging.getLogger("libvirt_server")
+logger = logging.getLogger("Kubernetes Resources Manager")
 logger.setLevel(logging.INFO)  # Default level, can override
 
 # Console output

@@ -1,7 +1,8 @@
 import time
+import json
 import functools
 
-from typing import Callable, Any
+from typing import Callable, Any, Optional, Dict
 
 from utils.logger import logger
 
@@ -22,7 +23,14 @@ def handle_kube_error(func: Callable[..., Any]) -> Callable[..., Any]:
     def wrapper(*args, **kwargs) -> Any:
         try:
             resource_name = None
-            for key in ('resource_type', 'node_name', 'namespace', 'service', 'pod_name', 'app_name'):
+            for key in (
+                'resource_type',
+                'node_name',
+                'namespace',
+                'service',
+                'pod_name',
+                'app_name'
+            ):
                 if key in kwargs and kwargs[key]:
                     resource_name = kwargs[key]
                     break
@@ -43,3 +51,12 @@ def handle_kube_error(func: Callable[..., Any]) -> Callable[..., Any]:
             return False
 
     return wrapper
+
+def parse_labels(raw: Optional[str]) -> Optional[Dict[str, str]]:
+    if not raw:
+        return None
+    try:
+        return json.loads(raw)
+    except Exception as e:
+        logger.warning(f"Invalid label format (expect JSON string): {raw}")
+        return None

@@ -8,35 +8,41 @@ from utils.logger import logger
 from utils.functions import timeit, handle_kube_error
 
 
-def format_image_list(images: List[Dict]) -> Dict[str, any]:
-    formatted = []
-
-    for image in images:
-        tag_names = [name for name in image.get("names", []) if ":" in name and "@" not in name]
-        if tag_names:
-            formatted.append({
-                "name": tag_names[0],
-                "sizeBytes": image.get("sizeBytes", 0)
-            })
-
-    return {
-        "total": len(formatted),
-        "list": formatted
-    }
-
 class ResouecesGet:
     def __init__(self, env: Optional[str]) -> None:
         self.env = env
 
-    @handle_kube_error
-    @timeit
-    def kubectl_get(self, resource_type: Optional[str], resource_name: Optional[str] = None, namespace: Optional[str] = None, output_type: Optional[str] = "json") -> Any:
+    def format_image_list(self, images: List[Dict]) -> Dict[str, any]:
+        formatted = []
+
+        for image in images:
+            tag_names = [name for name in image.get("names", []) if ":" in name and "@" not in name]
+            if tag_names:
+                formatted.append({
+                    "name": tag_names[0],
+                    "sizeBytes": image.get("sizeBytes", 0)
+                })
+
+        return {
+            "total": len(formatted),
+            "list": formatted
+        }
+
+    def kubectl_get(
+        self,
+        resource_type: Optional[str],
+        resource_name: Optional[str] = None,
+        namespace: Optional[str] = None,
+        all_namespace: Optional[bool] = False,
+        output_type: Optional[str] = "json"
+    ) -> Any:
         """获取特定kubernetes资源，并结构化输出
 
         Args:
             resource_type (Optional[str]): 资源类型
             resource_name (Optional[str]): 资源名称
             namespace (Optional[str], optional): 资源所在的命名空间
+            all_namespace (Optional[bool]): 
             output_type (str, optional): 输出类型，默认为'json'
 
         Raises:
@@ -57,6 +63,9 @@ class ResouecesGet:
                 
             if resource_name:
                 cmd += [resource_name]
+            
+            if all_namespace:
+                cmd += ["--all-namespaces"]
 
             logger.debug(f"Exec cmd: {cmd}")
             
@@ -65,7 +74,7 @@ class ResouecesGet:
 
             if proc.returncode != 0:
                 error_msg = stderr.decode().strip()
-                logger.error(f"[kubectl_get] Error running {' '.join(cmd)}: {error_msg}")
+                logger.error(f"[kubectl_get] Error running: {error_msg}")
                 raise RuntimeError(error_msg)
 
             output = stdout.decode().strip()
@@ -84,7 +93,11 @@ class ResouecesGet:
 
     @handle_kube_error
     @timeit
-    def get_nodes(self, node_name: Optional[str] = None, output_type: Optional[str] = "json") -> List[Dict[str, Any]]:
+    def get_nodes(
+        self,
+        node_name: Optional[str] = None,
+        output_type: Optional[str] = "json"
+    ) -> List[Dict[str, Any]]:
         """获取kubernetes节点信息
 
         Args:
@@ -151,18 +164,22 @@ class ResouecesGet:
                     "kubelet_version": nodeinfo.get("kubeletVersion"),
                     "kube_proxy_version": nodeinfo.get("kubeProxyVersion"),
 
-                    "images": format_image_list(images)
+                    "images": self.format_image_list(images)
                 })
 
             return nodes
         
         except Exception as e:
             logger.error(f"[get_nodes] Failed to get nodes: {e}")
-            return []
+            return [e]
 
     @handle_kube_error
     @timeit
-    def get_namespaces(self, namespace: Optional[str] = None, output_type: Optional[str] = "json") -> List[Dict[str, Any]]:
+    def get_namespaces(
+        self,
+        namespace: Optional[str] = None,
+        output_type: Optional[str] = "json"
+    ) -> List[Dict[str, Any]]:
         """获取命名空间信息
 
         Args:
@@ -213,16 +230,23 @@ class ResouecesGet:
 
         except Exception as e:
             logger.error(f"[get_namespaces] Failed to get namespaces: {e}")
-            return []
+            return [e]
 
     @handle_kube_error
     @timeit 
-    def get_services(self, service: Optional[str] = None, namespace: Optional[str] = "default", output_type: Optional[str] = "json") -> List[Dict[str, Any]]:
+    def get_services(
+        self,
+        service: Optional[str] = None,
+        namespace: Optional[str] = "default",
+        all_namespace: Optional[bool] = False,
+        output_type: Optional[str] = "json"
+    ) -> List[Dict[str, Any]]:
         """获取service信息
 
         Args:
             service (Optional[str], optional): service名称，当该值为空，则列出所有
             namespace (Optional[str], optional): service所在的命名空间，默认为default
+            all_namespace (Optional[bool]): 当设定为True时，则列出所有命名空间下对应的资源，反之仅列出'default'命名空间下的资源
             output_type (Optional[str], optional): 输出类型，默认为json
 
         Returns:
@@ -230,9 +254,20 @@ class ResouecesGet:
         """
         try:
             if service:
-                raw_result = self.kubectl_get("services", namespace=namespace, resource_name=service, output_type=output_type)
+                raw_result = self.kubectl_get(
+                    "services",
+                    namespace=namespace,
+                    resource_name=service,
+                    all_namespace=all_namespace,
+                    output_type=output_type
+                )
             else:
-                raw_result = self.kubectl_get("services", namespace=namespace, output_type=output_type)
+                raw_result = self.kubectl_get(
+                    "services",
+                    namespace=namespace,
+                    all_namespace=all_namespace,
+                    output_type=output_type
+                )
 
             if output_type == "yaml":
                 try:
@@ -285,16 +320,23 @@ class ResouecesGet:
 
         except Exception as e:
             logger.error(f"[get_services] Failed to get services: {e}")
-            return []
+            return [e]
 
     @handle_kube_error
     @timeit
-    def get_pods(self, pod_name: Optional[str] = None, namespace: Optional[str] = "default", output_type: Optional[str] = "json") -> List[Dict[str, Any]]:
+    def get_pods(
+        self,
+        pod_name: Optional[str] = None,
+        namespace: Optional[str] = "default",
+        all_namespace: Optional[bool] = False,
+        output_type: Optional[str] = "json"
+    ) -> List[Dict[str, Any]]:
         """获取pod信息
 
         Args:
             pod_name (Optional[str], optional): pod名称，当该值为空，则列出所有
             namespace (Optional[str], optional): pod所在的命名空间，默认为default
+            all_namespace (Optional[bool]): 当设定为True时，则列出所有命名空间下对应的资源，反之仅列出'default'命名空间下的资源
             output_type (Optional[str], optional): 输出类型，默认为json
 
         Returns:
@@ -302,9 +344,20 @@ class ResouecesGet:
         """
         try:
             if pod_name:
-                raw_result = self.kubectl_get("pods", namespace=namespace, resource_name=pod_name, output_type=output_type)
+                raw_result = self.kubectl_get(
+                    "pods",
+                    namespace=namespace,
+                    resource_name=pod_name,
+                    all_namespace=all_namespace,
+                    output_type=output_type
+                )
             else:
-                raw_result = self.kubectl_get("pods", namespace=namespace, output_type=output_type)
+                raw_result = self.kubectl_get(
+                    "pods",
+                    namespace=namespace,
+                    all_namespace=all_namespace,
+                    output_type=output_type
+                )
 
             if output_type == "yaml":
                 try:
@@ -361,16 +414,23 @@ class ResouecesGet:
 
         except Exception as e:
             logger.error(f"[get_pods] Failed to get pods: {e}")
-            return []
+            return [e]
 
     @handle_kube_error
     @timeit
-    def get_deployment_apps(self, app_name: Optional[str] = None, namespace: Optional[str] = 'default', output_type: Optional[str] = 'json') -> List[Dict[str, Any]]:
+    def get_deployment_apps(
+        self,
+        app_name: Optional[str] = None,
+        namespace: Optional[str] = 'default',
+        all_namespace: Optional[bool] = False,
+        output_type: Optional[str] = 'json'
+    ) -> List[Dict[str, Any]]:
         """获取deployment信息
 
         Args:
             app_name (Optional[str], optional): deployment名称，当该值为空，则列出所有
             namespace (Optional[str], optional): deployment所在的命名空间
+            all_namespace (Optional[bool]): 当设定为True时，则列出所有命名空间下对应的资源，反之仅列出'default'命名空间下的资源
             output_type (Optional[str], optional): 输出类型，默认为json
 
         Returns:
@@ -378,9 +438,20 @@ class ResouecesGet:
         """
         try:
             if app_name:
-                raw_result = self.kubectl_get("deployments.app", namespace=namespace, resource_name=app_name, output_type=output_type)
+                raw_result = self.kubectl_get(
+                    "deployments.app",
+                    namespace=namespace,
+                    resource_name=app_name,
+                    all_namespace=all_namespace,
+                    output_type=output_type
+                )
             else:
-                raw_result = self.kubectl_get("deployments.app", namespace=namespace, output_type=output_type)
+                raw_result = self.kubectl_get(
+                    "deployments.app",
+                    namespace=namespace,
+                    all_namespace=all_namespace,
+                    output_type=output_type
+                )
                 
             if output_type == "yaml":
                 try:
@@ -446,14 +517,4 @@ class ResouecesGet:
                 
         except Exception as e:
             logger.error(f"[get_deployment_apps] Failed to get apps: {e}")
-            return []
-
-
-
-# if __name__ == "__main__":
-    # print(kubectl_get("ns", "", "wide"))
-    # print(get_nodes("k8s-master.ryrie.cn", output_type="json"))
-    # pprint(get_namespaces("ryrie",output_type="json"))
-    # pprint(get_services("ryrie", "", output_type="json"))
-    # pprint(get_pods("", namespace="kube-system", output_type="json"))
-    # pprint(get_deployment_apps("coredns", namespace="kube-system", output_type="json"))
+            return [e]

@@ -1,0 +1,226 @@
+[2025-06-19 10:15:47,008] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 10:16:41,193] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 10:16:41,195] [INFO] Registered tool: get_nodes
+[2025-06-19 10:16:41,195] [INFO] Total registered tools: 1
+[2025-06-19 10:19:38,246] [INFO] kubectl_get took 0.05 seconds
+[2025-06-19 10:19:38,246] [INFO] Kubernetes operation kubectl_get succeeded
+[2025-06-19 10:19:38,246] [INFO] get_nodes took 0.06 seconds
+[2025-06-19 10:19:38,246] [INFO] Kubernetes operation get_nodes succeeded
+[2025-06-19 10:27:53,561] [INFO] Closing Libvirt Server...
+[2025-06-19 10:27:54,983] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 10:27:54,988] [INFO] Registered tool: get_nodes
+[2025-06-19 10:27:54,988] [INFO] Registered tool: get_namespaces
+[2025-06-19 10:27:54,988] [INFO] Registered tool: get_services
+[2025-06-19 10:27:54,988] [INFO] Registered tool: get_pods
+[2025-06-19 10:27:54,988] [INFO] Registered tool: get_deployment_apps
+[2025-06-19 10:27:54,988] [INFO] Total registered tools: 5
+[2025-06-19 10:29:23,812] [INFO] kubectl_get took 0.05 seconds
+[2025-06-19 10:29:23,812] [INFO] Kubernetes operation kubectl_get succeeded
+[2025-06-19 10:29:23,812] [INFO] get_services took 0.05 seconds
+[2025-06-19 10:29:23,812] [INFO] Kubernetes operation get_services succeeded
+[2025-06-19 10:30:01,773] [INFO] kubectl_get took 0.05 seconds
+[2025-06-19 10:30:01,773] [INFO] Kubernetes operation kubectl_get succeeded
+[2025-06-19 10:30:01,774] [INFO] get_nodes took 0.05 seconds
+[2025-06-19 10:30:01,774] [INFO] Kubernetes operation get_nodes succeeded
+[2025-06-19 10:34:18,970] [INFO] Closing Libvirt Server...
+[2025-06-19 10:37:13,431] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 10:37:13,433] [INFO] Registered tool: get_resources
+[2025-06-19 10:37:13,433] [INFO] Total registered tools: 1
+[2025-06-19 10:40:27,265] [INFO] kubectl_get took 0.04 seconds
+[2025-06-19 10:40:27,265] [INFO] Kubernetes operation kubectl_get succeeded
+[2025-06-19 10:40:27,266] [INFO] get_deployment_apps took 0.04 seconds
+[2025-06-19 10:40:27,266] [INFO] Kubernetes operation get_deployment_apps succeeded
+[2025-06-19 10:40:47,699] [INFO] kubectl_get took 0.05 seconds
+[2025-06-19 10:40:47,700] [INFO] Kubernetes operation kubectl_get succeeded
+[2025-06-19 10:40:47,700] [INFO] get_deployment_apps took 0.05 seconds
+[2025-06-19 10:40:47,700] [INFO] Kubernetes operation get_deployment_apps succeeded
+[2025-06-19 10:41:25,509] [INFO] kubectl_get took 0.05 seconds
+[2025-06-19 10:41:25,509] [INFO] Kubernetes operation kubectl_get succeeded
+[2025-06-19 10:41:25,509] [INFO] get_namespaces took 0.05 seconds
+[2025-06-19 10:41:25,509] [INFO] Kubernetes operation get_namespaces succeeded
+[2025-06-19 10:41:55,301] [INFO] kubectl_get took 0.07 seconds
+[2025-06-19 10:41:55,302] [INFO] Kubernetes operation kubectl_get(kube-system) succeeded
+[2025-06-19 10:41:55,302] [INFO] get_pods took 0.07 seconds
+[2025-06-19 10:41:55,302] [INFO] Kubernetes operation get_pods(kube-system) succeeded
+[2025-06-19 11:01:55,473] [INFO] Closing Libvirt Server...
+[2025-06-19 14:29:32,212] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 14:29:32,214] [INFO] Registered tool: get_resources
+[2025-06-19 14:29:32,214] [INFO] Registered tool: delete_resources
+[2025-06-19 14:29:32,214] [INFO] Total registered tools: 2
+[2025-06-19 14:57:08,903] [INFO] get_nodes took 0.06 seconds
+[2025-06-19 14:57:08,904] [INFO] Kubernetes operation get_nodes succeeded
+[2025-06-19 14:59:58,794] [INFO] get_services took 0.07 seconds
+[2025-06-19 14:59:58,795] [INFO] Kubernetes operation get_services succeeded
+[2025-06-19 15:00:34,901] [ERROR] Kubernetes operation delete_services exception: ResourcesDelete.delete_services() got an unexpected keyword argument 'service'. Did you mean 'services'?
+[2025-06-19 15:01:49,066] [INFO] Closing Libvirt Server...
+[2025-06-19 15:01:50,697] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 15:01:50,699] [INFO] Registered tool: get_resources
+[2025-06-19 15:01:50,699] [INFO] Registered tool: delete_resources
+[2025-06-19 15:01:50,699] [INFO] Total registered tools: 2
+[2025-06-19 15:02:15,818] [ERROR] Kubernetes operation delete_services exception: ResourcesDelete.delete_services() got an unexpected keyword argument 'services'. Did you mean 'service'?
+[2025-06-19 15:02:43,534] [ERROR] Kubernetes operation delete_services exception: ResourcesDelete.delete_services() got an unexpected keyword argument 'services'. Did you mean 'service'?
+[2025-06-19 15:03:06,248] [INFO] Closing Libvirt Server...
+[2025-06-19 15:03:07,612] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 15:03:07,614] [INFO] Registered tool: get_resources
+[2025-06-19 15:03:07,614] [INFO] Registered tool: delete_resources
+[2025-06-19 15:03:07,614] [INFO] Total registered tools: 2
+[2025-06-19 15:03:49,912] [INFO] delete_services took 0.06 seconds
+[2025-06-19 15:03:49,913] [INFO] Kubernetes operation delete_services(default) succeeded
+[2025-06-19 16:00:44,988] [ERROR] [kubectl_get] Error running: Error from server (NotFound): services "ryrie-test" not found
+[2025-06-19 16:00:44,989] [ERROR] [get_services] Failed to get services: Error from server (NotFound): services "ryrie-test" not found
+[2025-06-19 16:00:44,989] [INFO] get_services took 0.06 seconds
+[2025-06-19 16:00:44,989] [INFO] Kubernetes operation get_services(default) succeeded
+[2025-06-19 16:11:54,189] [INFO] get_namespaces took 0.05 seconds
+[2025-06-19 16:11:54,189] [INFO] Kubernetes operation get_namespaces succeeded
+[2025-06-19 16:15:16,385] [INFO] get_pods took 0.05 seconds
+[2025-06-19 16:15:16,385] [INFO] Kubernetes operation get_pods succeeded
+[2025-06-19 16:16:57,830] [INFO] delete_pods took 0.94 seconds
+[2025-06-19 16:16:57,830] [INFO] Kubernetes operation delete_pods(default) succeeded
+[2025-06-19 16:44:37,117] [INFO] Closing Libvirt Server...
+[2025-06-19 16:48:42,799] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-19 16:48:42,802] [INFO] Registered tool: get_resources
+[2025-06-19 16:48:42,802] [INFO] Registered tool: delete_resources
+[2025-06-19 16:48:42,802] [INFO] Total registered tools: 2
+[2025-06-19 16:48:45,835] [INFO] Closing Libvirt Server...
+[2025-06-24 09:09:40,153] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 09:09:40,158] [INFO] Registered tool: get_resources
+[2025-06-24 09:09:40,158] [INFO] Registered tool: delete_resources
+[2025-06-24 09:09:40,159] [INFO] Registered tool: describe_resources
+[2025-06-24 09:09:40,159] [INFO] Registered tool: api_resources
+[2025-06-24 09:09:40,159] [INFO] Total registered tools: 4
+[2025-06-24 09:15:10,923] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 09:15:10,927] [INFO] Registered tool: get_resources
+[2025-06-24 09:15:10,928] [INFO] Registered tool: delete_resources
+[2025-06-24 09:15:10,928] [INFO] Registered tool: describe_resources
+[2025-06-24 09:15:10,928] [INFO] Registered tool: api_resources
+[2025-06-24 09:15:10,928] [INFO] Total registered tools: 4
+[2025-06-24 09:22:06,714] [INFO] Closing Libvirt Server...
+[2025-06-24 09:22:07,574] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 09:22:07,579] [INFO] Registered tool: get_resources
+[2025-06-24 09:22:07,579] [INFO] Registered tool: delete_resources
+[2025-06-24 09:22:07,579] [INFO] Registered tool: describe_resources
+[2025-06-24 09:22:07,579] [INFO] Registered tool: api_resources
+[2025-06-24 09:22:07,580] [INFO] Total registered tools: 4
+[2025-06-24 09:23:29,706] [INFO] get_nodes took 0.25 seconds
+[2025-06-24 09:23:29,707] [INFO] Kubernetes operation get_nodes succeeded
+[2025-06-24 09:23:52,252] [INFO] get_namespaces took 0.07 seconds
+[2025-06-24 09:23:52,253] [INFO] Kubernetes operation get_namespaces succeeded
+[2025-06-24 09:24:06,334] [INFO] get_namespaces took 0.05 seconds
+[2025-06-24 09:24:06,334] [INFO] Kubernetes operation get_namespaces succeeded
+[2025-06-24 09:24:35,435] [INFO] describe_nodes took 0.56 seconds
+[2025-06-24 09:24:35,435] [INFO] Kubernetes operation describe_nodes succeeded
+[2025-06-24 09:24:59,113] [INFO] kubectl_get_api_resoucrs took 0.03 seconds
+[2025-06-24 09:24:59,113] [INFO] Kubernetes operation kubectl_get_api_resoucrs succeeded
+[2025-06-24 09:35:27,575] [INFO] Closing Libvirt Server...
+[2025-06-24 09:35:28,563] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 09:35:28,568] [INFO] Registered tool: get_resources
+[2025-06-24 09:35:28,569] [INFO] Registered tool: delete_resources
+[2025-06-24 09:35:28,569] [INFO] Registered tool: describe_resources
+[2025-06-24 09:35:28,569] [INFO] Registered tool: api_resources
+[2025-06-24 09:35:28,569] [INFO] Registered tool: get_resources_logs
+[2025-06-24 09:35:28,569] [INFO] Total registered tools: 5
+[2025-06-24 09:42:10,232] [INFO] Closing Libvirt Server...
+[2025-06-24 09:42:11,619] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 09:42:11,625] [INFO] Registered tool: get_resources
+[2025-06-24 09:42:11,625] [INFO] Registered tool: delete_resources
+[2025-06-24 09:42:11,626] [INFO] Registered tool: describe_resources
+[2025-06-24 09:42:11,626] [INFO] Registered tool: api_resources
+[2025-06-24 09:42:11,626] [INFO] Registered tool: get_resources_logs
+[2025-06-24 09:42:11,626] [INFO] Total registered tools: 5
+[2025-06-24 14:40:21,103] [INFO] Closing Libvirt Server...
+[2025-06-24 14:40:22,108] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 14:40:22,116] [INFO] Registered tool: get_resources
+[2025-06-24 14:40:22,116] [INFO] Registered tool: delete_resources
+[2025-06-24 14:40:22,116] [INFO] Registered tool: describe_resources
+[2025-06-24 14:40:22,116] [INFO] Registered tool: get_api_resources
+[2025-06-24 14:40:22,117] [INFO] Registered tool: get_resources_logs
+[2025-06-24 14:40:22,117] [INFO] Registered tool: patch_resource
+[2025-06-24 14:40:22,117] [INFO] Total registered tools: 6
+[2025-06-24 23:27:00,704] [INFO] Closing Libvirt Server...
+[2025-06-24 23:27:02,391] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 23:27:02,405] [INFO] Registered tool: get_resources
+[2025-06-24 23:27:02,405] [INFO] Registered tool: delete_resources
+[2025-06-24 23:27:02,406] [INFO] Registered tool: describe_resources
+[2025-06-24 23:27:02,406] [INFO] Registered tool: get_api_resources
+[2025-06-24 23:27:02,406] [INFO] Registered tool: get_resources_logs
+[2025-06-24 23:27:02,406] [INFO] Registered tool: patch_resource
+[2025-06-24 23:27:02,406] [INFO] Registered tool: port_forward
+[2025-06-24 23:27:02,406] [INFO] Registered tool: create_resource
+[2025-06-24 23:27:02,406] [INFO] Total registered tools: 8
+[2025-06-24 23:32:07,401] [INFO] Closing Libvirt Server...
+[2025-06-24 23:32:08,603] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 23:32:08,620] [INFO] Registered tool: get_resources
+[2025-06-24 23:32:08,620] [INFO] Registered tool: delete_resources
+[2025-06-24 23:32:08,620] [INFO] Registered tool: describe_resources
+[2025-06-24 23:32:08,620] [INFO] Registered tool: get_api_resources
+[2025-06-24 23:32:08,620] [INFO] Registered tool: get_resources_logs
+[2025-06-24 23:32:08,620] [INFO] Registered tool: patch_resource
+[2025-06-24 23:32:08,620] [INFO] Registered tool: port_forward
+[2025-06-24 23:32:08,620] [INFO] Registered tool: create_resource
+[2025-06-24 23:32:08,620] [INFO] Total registered tools: 8
+[2025-06-24 23:34:54,208] [DEBUG] Exec cmd: ['kubectl', '--kubeconfig', '/root/mcp_learn/mcp-kubernetes/.kube/config', 'get', 'pods', '-o', 'json']
+[2025-06-24 23:34:54,258] [INFO] get_pods took 0.05 seconds
+[2025-06-24 23:34:54,258] [INFO] Kubernetes operation get_pods succeeded
+[2025-06-24 23:35:09,295] [DEBUG] Exec cmd: ['kubectl', '--kubeconfig', '/root/mcp_learn/mcp-kubernetes/.kube/config', 'get', 'pods', '-o', 'json']
+[2025-06-24 23:35:09,353] [INFO] get_pods took 0.06 seconds
+[2025-06-24 23:35:09,354] [INFO] Kubernetes operation get_pods succeeded
+[2025-06-24 23:35:46,272] [DEBUG] Exec cmd: ['kubectl', '--kubeconfig', '/root/mcp_learn/mcp-kubernetes/.kube/config', 'get', 'pods', '-o', 'json']
+[2025-06-24 23:35:46,325] [INFO] get_pods took 0.05 seconds
+[2025-06-24 23:35:46,325] [INFO] Kubernetes operation get_pods succeeded
+[2025-06-24 23:36:02,539] [DEBUG] Exec cmd: ['kubectl', '--kubeconfig', '/root/mcp_learn/mcp-kubernetes/.kube/config', 'get', 'deployments.app', '-o', 'json']
+[2025-06-24 23:36:02,587] [INFO] get_deployment_apps took 0.05 seconds
+[2025-06-24 23:36:02,588] [INFO] Kubernetes operation get_deployment_apps succeeded
+[2025-06-24 23:42:13,002] [INFO] Closing Libvirt Server...
+[2025-06-24 23:42:14,864] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 23:42:14,878] [INFO] Registered tool: get_resources
+[2025-06-24 23:42:14,879] [INFO] Registered tool: delete_resources
+[2025-06-24 23:42:14,879] [INFO] Registered tool: describe_resources
+[2025-06-24 23:42:14,879] [INFO] Registered tool: get_api_resources
+[2025-06-24 23:42:14,879] [INFO] Registered tool: get_resources_logs
+[2025-06-24 23:42:14,879] [INFO] Registered tool: patch_resource
+[2025-06-24 23:42:14,879] [INFO] Registered tool: port_forward
+[2025-06-24 23:42:14,879] [INFO] Registered tool: create_resource
+[2025-06-24 23:42:14,879] [INFO] Total registered tools: 8
+[2025-06-24 23:53:30,928] [INFO] Closing Libvirt Server...
+[2025-06-24 23:53:32,230] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 23:53:32,247] [INFO] Registered tool: get_resources
+[2025-06-24 23:53:32,248] [INFO] Registered tool: delete_resources
+[2025-06-24 23:53:32,248] [INFO] Registered tool: describe_resources
+[2025-06-24 23:53:32,248] [INFO] Registered tool: get_api_resources
+[2025-06-24 23:53:32,248] [INFO] Registered tool: get_resources_logs
+[2025-06-24 23:53:32,248] [INFO] Registered tool: patch_resource
+[2025-06-24 23:53:32,248] [INFO] Registered tool: port_forward
+[2025-06-24 23:53:32,248] [INFO] Registered tool: create_resource
+[2025-06-24 23:53:32,248] [INFO] Total registered tools: 8
+[2025-06-24 23:54:08,096] [DEBUG] Executing command: ['kubectl', '--kubeconfig', '/root/mcp_learn/mcp-kubernetes/.kube/config', '-n', 'default', 'port-forward', '--address', '0.0.0.0,::', 'pods/nginx', '8080:80']
+[2025-06-24 23:54:08,100] [INFO] Started port-forward: default/pods/nginx:8080->80, PID: 22905
+[2025-06-24 23:54:08,101] [INFO] start_port_forward took 0.01 seconds
+[2025-06-24 23:54:08,101] [INFO] Kubernetes operation start_port_forward(pods) succeeded
+[2025-06-24 23:55:53,657] [ERROR] [port_forward] Error: resource_type and resource_name are required when action is 'start'
+[2025-06-24 23:56:07,269] [ERROR] [port_forward] Error: resource_type and resource_name are required when action is 'start'
+[2025-06-24 23:56:43,058] [INFO] Closing Libvirt Server...
+[2025-06-24 23:57:45,877] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-24 23:57:45,891] [INFO] Registered tool: get_resources
+[2025-06-24 23:57:45,892] [INFO] Registered tool: delete_resources
+[2025-06-24 23:57:45,892] [INFO] Registered tool: describe_resources
+[2025-06-24 23:57:45,892] [INFO] Registered tool: get_api_resources
+[2025-06-24 23:57:45,893] [INFO] Registered tool: get_resources_logs
+[2025-06-24 23:57:45,893] [INFO] Registered tool: patch_resource
+[2025-06-24 23:57:45,893] [INFO] Registered tool: port_forward
+[2025-06-24 23:57:45,893] [INFO] Registered tool: create_resource
+[2025-06-24 23:57:45,893] [INFO] Total registered tools: 8
+[2025-06-25 00:00:14,210] [INFO] Closing Libvirt Server...
+[2025-06-25 00:00:15,011] [INFO] MCP 'Kubernetes Resources Manager Server' initialized on 0.0.0.0:8000
+[2025-06-25 00:00:15,024] [INFO] Registered tool: get_resources
+[2025-06-25 00:00:15,024] [INFO] Registered tool: delete_resources
+[2025-06-25 00:00:15,028] [INFO] Registered tool: describe_resources
+[2025-06-25 00:00:15,028] [INFO] Registered tool: get_api_resources
+[2025-06-25 00:00:15,028] [INFO] Registered tool: get_resources_logs
+[2025-06-25 00:00:15,028] [INFO] Registered tool: patch_resource
+[2025-06-25 00:00:15,028] [INFO] Registered tool: port_forward
+[2025-06-25 00:00:15,028] [INFO] Registered tool: create_resource
+[2025-06-25 00:00:15,028] [INFO] Total registered tools: 8
+[2025-06-25 00:00:44,332] [INFO] Stopped port-forward for PID 22905
+[2025-06-25 00:00:44,336] [INFO] stop_port_forward took 0.00 seconds
+[2025-06-25 00:01:08,383] [ERROR] [port_forward] Error: resource_type and resource_name are required when action is 'start'
+[2025-06-25 00:01:47,730] [ERROR] [port_forward] Error: resource_type and resource_name are required when action is 'start'
