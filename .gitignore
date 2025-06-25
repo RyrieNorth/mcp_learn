@@ -1,0 +1,6 @@
+mcp-kubernetes/__pycache__/*
+mcp-kubernetes/agent_log.log
+mcp-kubernetes/server.log
+mcp-kubernetes/template/__pycache__/*
+mcp-kubernetes/test/*
+mcp-kubernetes/utils/__pycache__/*
