@@ -1,0 +1,3 @@
+帮我创建一个名为nginx-test的pod，暴漏容器80端口，设定标签为app=nginx-test，镜像使用dockerhub.ryrie.cn/library/nginx，之后创建一个service，名称为nginx-test，类型为nodeport，映射30080端口到容器的80端口
+
+帮我创建一个名为nginx-app的deployment，暴漏容器80端口，副本数量为4，设定标签为app=nginx-app，镜像使用dockerhub.ryrie.cn/library/nginx，之后创建一个service，名称为nginx-app，类型为nodeport，映射30880端口到容器的80端口

@@ -1,12 +1,15 @@
 import sys
+import socket
+import netifaces
 
 from mcp.server.fastmcp import FastMCP
-
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Literal
 
 from utils.functions import parse_labels
 from utils.logger import logger, set_log_file, set_log_level
 from utils.kubernetes_manager import KubernetesManager
+
+
 
 set_log_level("DEBUG")
 set_log_file("server.log")
@@ -37,7 +40,7 @@ def get_resources(
         name (Optional[str]): 资源名称（如pod名、node名等）
         namespace (Optional[str]): 命名空间（如适用）
         all_namespace (Optional[bool]): 当设定为True时，则列出所有命名空间下对应的资源，反之仅列出'default'命名空间下的资源
-        output_type (Optional[str]): 输出类型，默认为json，支持yaml、wide
+        output_type (Optional[str]): 输出类型，默认为json，支持yaml、wide，当非详细查询时，建议使用wide列出少量结果
 
     Returns:
         List[Dict[str, Any]]: 资源信息
@@ -105,7 +108,7 @@ def delete_resources(
     """
     try:
         if resource_type == "namespaces":
-            return km.delete.delete_namespaces(namespace=name)
+            return km.delete.delete_namespaces(namespaces=name)
         
         elif resource_type == "pods":
             return km.delete.delete_pods(pod_name=name, namespace=namespace)
@@ -294,13 +297,13 @@ def patch_resource(
 
 @mcp.tool()
 def port_forward(
+    action: Literal['start', 'stop'],
     resource_type: Optional[str] = None,
     resource_name: Optional[str] = None,
     local_port: Optional[int] = None,
     remote_port: Optional[int] = None,
-    namespace: Optional[str] = 'default',
-    action: str = 'start',
     proc_id: Optional[int] = None,
+    namespace: str = 'default'
 ) -> str:
     """
     启动或停止本地端口映射到 Kubernetes 资源。
@@ -318,22 +321,32 @@ def port_forward(
         str: 执行结果或错误信息
     """
     try:
-        if action == 'start':
-            if not resource_type or not resource_name:
-                raise ValueError("resource_type and resource_name are required when action is 'start'")
+        if action == "start":
+            if not resource_type or not resource_name or local_port is None or remote_port is None:
+                raise ValueError("When action is 'start', resource_type, resource_name, local_port and remote_port are required.")
+
+            ip_list = [
+                addr['addr']
+                for iface in netifaces.interfaces()
+                for addr in netifaces.ifaddresses(iface).get(netifaces.AF_INET, [])
+                if not addr['addr'].startswith(("127.", "172.", "169.254.")) and addr['addr'] != "0.0.0.0"
+            ]
+                     
             return km.portforward.start_port_forward(
                 resource_type=resource_type,
                 resource_name=resource_name,
                 local_port=local_port,
                 remote_port=remote_port,
-                namespace=namespace
-            )
-        elif action == 'stop':
+                namespace=namespace,
+            ), f"Now port-forwarding {ip_list}:{local_port} to {resource_name}"
+            
+        elif action == "stop":
             if proc_id is None:
-                raise ValueError("proc_id is required when action is 'stop'")
+                raise ValueError("When action is 'stop', proc_id is required.")
             return km.portforward.stop_port_forward(proc_id=proc_id)
         else:
             raise ValueError(f"Unsupported action: {action}")
+        
     except Exception as e:
         logger.error(f"[port_forward] Error: {str(e)}")
         return f"[port_forward] Failed: {str(e)}"
@@ -355,7 +368,6 @@ def create_resource(
     secret_docker_password: Optional[str] = None,
     secret_docker_server: Optional[str] = None,
     service_protocol: Optional[str] = 'TCP',
-    service_port: Optional[int] = None,
     service_port_name: Optional[str] = None,
     service_targetPort: Optional[int] = None,
     service_nodePort: Optional[int] = None,
@@ -363,7 +375,7 @@ def create_resource(
     service_type: str = "ClusterIP",
     service_ports: Optional[List[Dict[str, Any]]] = None,
     namespace: Optional[str] = 'default',
-    labels: Optional[str] = None,
+    labels: Optional[Dict[str, str]] = None,
 ) -> str:
     """创建 Kubernetes 资源。
 
@@ -392,10 +404,9 @@ def create_resource(
         secret_docker_password (Optional[str], optional): Docker Registry 类型的密码。
         secret_docker_server (Optional[str], optional): Docker Registry 的服务地址（如 https://registry.example.com）。
         service_protocol (Optional[str], optional): Service 协议类型，支持 'TCP' 或 'UDP'，默认为 'TCP'。不支持小写！
-        service_port (Optional[int], optional): Service 对外暴露的端口。
-        service_port_name (Optional[str], optional): Service 端口的命名（可选）。
+        service_port_name (Optional[str], optional): Service 端口的命名，当有多个端口对象时需要指定。
         service_targetPort (Optional[int], optional): 后端 Pod 暴露的目标端口。
-        service_nodePort (Optional[int], optional): NodePort 类型 Service 的固定端口（可选）。
+        service_nodePort (Optional[int], optional): NodePort 类型 Service 对外暴漏的固定端口，当类型设定为NodePort时要指定。
         service_selector (Optional[Dict[str, str]], optional): 用于匹配后端 Pod 的 label。
         service_type (str, optional): Service 类型，支持 'ClusterIP'、'NodePort'，默认为 'ClusterIP'。
         service_ports (Optional[List[Dict[str, Any]]], optional): 多端口定义的完整字典列表，优先于单个端口配置。
@@ -480,7 +491,7 @@ def create_resource(
                 km.create.build_port(
                     name=service_port_name,
                     protocol=service_protocol,
-                    port=service_port,
+                    port=service_targetPort,
                     targetPort=service_targetPort,
                     nodePort=service_nodePort
                 )
