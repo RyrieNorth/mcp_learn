@@ -8,7 +8,7 @@ uv venv
 source .venv/bin/activate
 ```
 
-## 安装libvirt开发包:
+## 安装kubectl命令行工具:
 ```bash
 yum install -y kubectl
 ```
@@ -21,6 +21,8 @@ uv sync
 
 ## 配置.env文件：
 ```bash
+KUBECONFIG="" // k8s凭据文件
+
 API_KEY=""  // LLM API Key
 API_URL="https://api.siliconflow.cn"    // LLM API Server
 
